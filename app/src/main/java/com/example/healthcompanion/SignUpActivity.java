@@ -2,6 +2,7 @@ package com.example.healthcompanion;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -28,10 +29,19 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView signIn;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        sharedPreferences = getSharedPreferences("steps",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email);
         password1 = findViewById(R.id.password1);
@@ -58,6 +68,12 @@ public class SignUpActivity extends AppCompatActivity {
     }
     private void Register()
     {
+        editor.putString("First Time Second Time","First Time");
+        editor.putString("email",email.getText().toString());
+        editor.putString("password",password1.getText().toString());
+        editor.commit();
+
+
         String emailid = email.getText().toString();
         String paasword1 = password1.getText().toString();
         String paasword2 = password2.getText().toString();

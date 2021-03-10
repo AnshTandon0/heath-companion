@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCompanion">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".IndividualDayDisplay"></activity>
+        <activity android:name=".AllDaysSteps" />
+        <activity android:name=".Pedometer"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".Dashboard" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity">

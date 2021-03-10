@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,11 +29,27 @@ public class SignInActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        sharedPreferences = getSharedPreferences("steps",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        if (sharedPreferences.getString("First Time Second Time","").equalsIgnoreCase("Second Time"))
+        {
+            firebaseAuth.signInWithEmailAndPassword(sharedPreferences.getString("email",""),sharedPreferences.getString("password",""));
+            Intent intent = new Intent(SignInActivity.this, Dashboard.class);
+            startActivity(intent);
+            finish();
+        }
+
+
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         signInButton = findViewById(R.id.login);
@@ -66,6 +83,13 @@ public class SignInActivity extends AppCompatActivity {
     }
     private void Login()
     {
+        editor.putString("First Time Second Time","First Time");
+        editor.putString("email",email.getText().toString());
+        editor.putString("password",password.getText().toString());
+        editor.commit();
+
+
+
         String emailid = email.getText().toString();
         String paasword = password.getText().toString();
         if (TextUtils.isEmpty(emailid))
