@@ -9,17 +9,17 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface DayWiseStepsDao {
+public interface StepsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(DayWiseStep dayWiseStep);
+    void insert(Steps steps);
 
     @Update
-    void update(DayWiseStep dayWiseStep);
+    void update(Steps steps);
 
     @Query("SELECT * FROM Steps")
-    List <DayWiseStep> selectAll();
+    List <Steps> selectAll();
 
     @Query("SELECT * FROM Steps WHERE date = :date")
-    DayWiseStep select(String date);
+    Steps select(String date);
 }

@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class DayWiseStepAdapter extends RecyclerView.Adapter<DayWiseStepAdapter.DayWiseStepViewHolder> {
+public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DayWiseStepViewHolder> {
 
-    private final List<DayWiseStep> dayWiseSteps;
+    private final List<Steps> steps;
     private LayoutInflater layoutInflater;
     private ItemClickListener itemClickListener;
 
-    public DayWiseStepAdapter(Context context, List<DayWiseStep> dayWiseSteps , ItemClickListener itemClickListener)
+    public StepsAdapter(Context context, List<Steps> steps, ItemClickListener itemClickListener)
     {
         this.layoutInflater = layoutInflater.from(context);
-        this.dayWiseSteps = dayWiseSteps;
+        this.steps = steps;
         this.itemClickListener = itemClickListener;
 
     }
@@ -52,13 +52,13 @@ public class DayWiseStepAdapter extends RecyclerView.Adapter<DayWiseStepAdapter.
     @Override
     public void onBindViewHolder(@NonNull DayWiseStepViewHolder holder, int position) {
 
-        holder.textView.setText(dayWiseSteps.get(position).getDate() + "  :-  " +dayWiseSteps.get(position).getTotalSteps());
+        holder.textView.setText(steps.get(position).getDate() + "  :-  " + steps.get(position).getTotalSteps());
 
     }
 
     @Override
     public int getItemCount() {
-        return dayWiseSteps.size();
+        return steps.size();
     }
 
     public interface ItemClickListener

@@ -11,6 +11,7 @@
         android:theme="@style/Theme.HealthCompanion">
         <activity android:name=".IndividualDayDisplay"></activity>
         <activity android:name=".AllDaysSteps" />
+        <service android:name=".StepsService"/>
         <activity android:name=".Pedometer"></activity>
         <activity android:name=".ForgotPassword" />
         <activity android:name=".Dashboard" />

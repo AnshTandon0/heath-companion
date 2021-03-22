@@ -2,14 +2,15 @@ package com.example.healthcompanion;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,17 +18,16 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
-public class Pedometer extends AppCompatActivity implements SensorEventListener {
+import static android.content.ContentValues.TAG;
 
-    private SimpleDateFormat dateFormat;
+public class Pedometer extends AppCompatActivity {
+
     private String date;
     private Calendar calender;
-    private SensorManager sensorManager;
-    private Sensor sensor;
     private TextView distanceTotal, stepsTotal,distanceWalk,distanceRun;
-    private DayWiseStepDatabase dayWiseStepDatabase;
-    private DayWiseStepsDao dayWiseStepsDao;
+    private StepsRepository stepsRepository;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -43,46 +43,36 @@ public class Pedometer extends AppCompatActivity implements SensorEventListener 
         distanceWalk = findViewById(R.id.distanceWalk);
 
 
-        // calendar , date format and date inialized
+        // calendar , date format and date initialized
         calender = Calendar.getInstance();
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         date = dateFormat.format(calender.getTime());
 
         // database initialized
-        dayWiseStepDatabase = DayWiseStepDatabase.getInstance(this);
-        dayWiseStepsDao = dayWiseStepDatabase.dayWiseStepsDao();
+       stepsRepository = new StepsRepository(this);
 
-        //shared prefrences initialized
+        //shared preferences initialized
         sharedPreferences = getSharedPreferences("steps",MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        //sensor and sensor manager initialized
-        sensorManager = (SensorManager)this.getSystemService(Context.SENSOR_SERVICE);
-        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null)
-        { sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-            sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_FASTEST); }
-        else
-        { Toast.makeText(this, "Step Detector Sensor not Present", Toast.LENGTH_LONG).show(); }
-
-
-        initialize();
-
         // set text for textView
-        distanceTotal.setText(String.format("%.4f",dayWiseStepsDao.select(date).getTotalDistance()) + " km");
-        distanceWalk.setText(String.format("%.4f",dayWiseStepsDao.select(date).getDistanceWalk()) + " km");
-        distanceRun.setText(String.format("%.4f",dayWiseStepsDao.select(date).getDistanceRan()) + " km");
-        stepsTotal.setText(String.valueOf(dayWiseStepsDao.select(date).getTotalSteps()));
+        // TODO to update the data as sensor is triggered
+        try {
+            if (stepsRepository.getAllSteps().size() > 0) {
+                distanceTotal.setText(String.format("%.4f", stepsRepository.search(date).getTotalDistance()) + " km");
+                distanceWalk.setText(String.format("%.4f", stepsRepository.search(date).getDistanceWalk()) + " km");
+                distanceRun.setText(String.format("%.4f", stepsRepository.search(date).getDistanceRan()) + " km");
+                stepsTotal.setText(String.valueOf(stepsRepository.search(date).getTotalSteps()));
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-    }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        update();
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+        Intent intent = new Intent(this,StepsService.class);
+        startService(intent);
     }
 
     public void runningMode(View view)
@@ -100,46 +90,8 @@ public class Pedometer extends AppCompatActivity implements SensorEventListener 
             editor.putString("current mode","walk");
             editor.commit();
         }
-
-
     }
 
-    // setting the values steps and distance
-    public void update()
-    {
-        date = dateFormat.format(calender.getTime());
-        if(sharedPreferences.getString("current date","").equalsIgnoreCase(date)) {
-            DayWiseStep dayWiseStep = dayWiseStepsDao.select(date);
-            if (sharedPreferences.getString("current mode", "").equalsIgnoreCase("walk")) {
-                dayWiseStepsDao.update(new DayWiseStep(date, dayWiseStep.getStepsWalk() + 1, dayWiseStep.getDistanceWalk() + 0.0008, dayWiseStep.getStepsRan(), dayWiseStep.getDistanceRan(), dayWiseStep.getTotalSteps() + 1, dayWiseStep.getTotalDistance() + 0.0008));
-            }
-
-            if (sharedPreferences.getString("current mode", "").equalsIgnoreCase("run")) {
-                dayWiseStepsDao.update(new DayWiseStep(date, dayWiseStep.getStepsWalk(), dayWiseStep.getDistanceWalk(), dayWiseStep.getStepsRan() + 1, dayWiseStep.getDistanceRan() + 0.0008, dayWiseStep.getTotalSteps() + 1, dayWiseStep.getTotalDistance() + 0.0008));
-            }
-            distanceTotal.setText(String.format("%.4f", dayWiseStepsDao.select(date).getTotalDistance()) + " km");
-            stepsTotal.setText(String.valueOf(dayWiseStepsDao.select(date).getTotalSteps()));
-            distanceWalk.setText(String.format("%.4f", dayWiseStepsDao.select(date).getDistanceWalk()) + " km");
-            distanceRun.setText(String.format("%.4f", dayWiseStepsDao.select(date).getDistanceRan()) + " km");
-        }
-        else
-        {
-            dayWiseStepsDao.insert(new DayWiseStep(date,0,0.0,0,0.0,0,0.0));
-            editor.putString("current date",date);
-            editor.putString("current mode","walk");
-            editor.commit();
-        }
-    }
-
-        // TODO to add async task for insert , update , delete.
-    // get the current date and initialize it in the database
-    public void initialize()
-    {
-        dayWiseStepsDao.insert(new DayWiseStep(date,0,0.0,0,0.0,0,0.0));
-        editor.putString("current date",date);
-        editor.putString("current mode","walk");
-        editor.commit();
-    }
 
     public void showAll(View view)
     {

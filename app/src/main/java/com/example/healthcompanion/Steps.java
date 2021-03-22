@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Steps")
-public class DayWiseStep {
+public class Steps {
 
     @PrimaryKey
     @NonNull
@@ -29,7 +29,7 @@ public class DayWiseStep {
     @NonNull
     private double totalDistance = 0;
 
-    public DayWiseStep(@NonNull String date, int stepsWalk, double distanceWalk, int stepsRan, double distanceRan, int totalSteps, double totalDistance) {
+    public Steps(@NonNull String date, int stepsWalk, double distanceWalk, int stepsRan, double distanceRan, int totalSteps, double totalDistance) {
         this.date = date;
         this.stepsWalk = stepsWalk;
         this.distanceWalk = distanceWalk;
