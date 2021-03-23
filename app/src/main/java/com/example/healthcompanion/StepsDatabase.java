@@ -26,7 +26,7 @@ public abstract class StepsDatabase extends RoomDatabase {
     private static StepsDatabase buildDatabaseInstance (Context context)
     {
         return Room.databaseBuilder(context, StepsDatabase.class,"database")
-                .allowMainThreadQueries()
+                //.allowMainThreadQueries()
                 .build();
     }
 }

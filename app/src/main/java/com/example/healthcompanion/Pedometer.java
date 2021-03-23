@@ -1,10 +1,14 @@
 package com.example.healthcompanion;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -31,6 +35,7 @@ public class Pedometer extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +61,6 @@ public class Pedometer extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         // set text for textView
-        // TODO to update the data as sensor is triggered
         try {
             if (stepsRepository.getAllSteps().size() > 0) {
                 distanceTotal.setText(String.format("%.4f", stepsRepository.search(date).getTotalDistance()) + " km");
@@ -73,6 +77,16 @@ public class Pedometer extends AppCompatActivity {
 
         Intent intent = new Intent(this,StepsService.class);
         startService(intent);
+
+        Button button = findViewById(R.id.StartRunningMode);
+        if (sharedPreferences.getString("current mode","").equalsIgnoreCase("walk"))
+        {
+            button.setText("Start Running mode");
+        }
+        else if (sharedPreferences.getString("current mode","").equalsIgnoreCase("run"))
+        {
+            button.setText("Stop Running mode");
+        }
     }
 
     public void runningMode(View view)
@@ -92,11 +106,41 @@ public class Pedometer extends AppCompatActivity {
         }
     }
 
-
     public void showAll(View view)
     {
         Intent intent = new Intent(this, AllDaysSteps.class);
         startActivity(intent);
         finish();
+    }
+
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            try {
+                if (stepsRepository.getAllSteps().size() > 0) {
+                    distanceTotal.setText(String.format("%.4f", stepsRepository.search(date).getTotalDistance()) + " km");
+                    distanceWalk.setText(String.format("%.4f", stepsRepository.search(date).getDistanceWalk()) + " km");
+                    distanceRun.setText(String.format("%.4f", stepsRepository.search(date).getDistanceRan()) + " km");
+                    stepsTotal.setText(String.valueOf(stepsRepository.search(date).getTotalSteps()));
+                }
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,new IntentFilter("com.example.healthcompanion"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
     }
 }

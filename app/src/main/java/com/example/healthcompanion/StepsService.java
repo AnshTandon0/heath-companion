@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,12 +31,14 @@ public class StepsService extends Service implements SensorEventListener {
     private StepsRepository stepsRepository;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private LocalBroadcastManager broadcastManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         // database initialized
         stepsRepository = new StepsRepository(this);
+        broadcastManager = LocalBroadcastManager.getInstance(this);
 
         // calendar , date format and date initialized
         calender = Calendar.getInstance();
@@ -45,7 +48,6 @@ public class StepsService extends Service implements SensorEventListener {
         //shared preferences initialized
         sharedPreferences = getSharedPreferences("steps",MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        Log.d(TAG, "update: ttttttttttttttt");
 
         //sensor initialized
         sensorManager = (SensorManager)this.getSystemService(Context.SENSOR_SERVICE);
@@ -105,7 +107,7 @@ public class StepsService extends Service implements SensorEventListener {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         date = dateFormat.format(calender.getTime());
 
-        if(sharedPreferences.getString("current date","").equalsIgnoreCase(date)) {
+        if (sharedPreferences.getString("current date", "").equalsIgnoreCase(date)) {
             Steps steps = stepsRepository.search(date);
             if (sharedPreferences.getString("current mode", "").equalsIgnoreCase("walk")) {
                 stepsRepository.update(new Steps(date, steps.getStepsWalk() + 1, steps.getDistanceWalk() + 0.0008, steps.getStepsRan(), steps.getDistanceRan(), steps.getTotalSteps() + 1, steps.getTotalDistance() + 0.0008));
@@ -114,13 +116,17 @@ public class StepsService extends Service implements SensorEventListener {
             if (sharedPreferences.getString("current mode", "").equalsIgnoreCase("run")) {
                 stepsRepository.update(new Steps(date, steps.getStepsWalk(), steps.getDistanceWalk(), steps.getStepsRan() + 1, steps.getDistanceRan() + 0.0008, steps.getTotalSteps() + 1, steps.getTotalDistance() + 0.0008));
             }
-        }
-        else
-        {
-            stepsRepository.insert(new Steps(date,0,0.0,0,0.0,0,0.0));
-            editor.putString("current date",date);
-            editor.putString("current mode","walk");
+        } else {
+            stepsRepository.insert(new Steps(date, 0, 0.0, 0, 0.0, 0, 0.0));
+            editor.putString("current date", date);
+            editor.putString("current mode", "walk");
             editor.commit();
         }
+
+        Intent intent = new Intent("com.example.healthcompanion");
+        if (intent != null) {
+            broadcastManager.sendBroadcast(intent);
+        }
     }
+
 }
