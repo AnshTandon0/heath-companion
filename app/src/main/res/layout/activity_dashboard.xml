@@ -27,6 +27,7 @@
             android:paddingHorizontal="40dp">
 
             <Button
+                android:onClick="exercise"
                 android:id="@+id/exercise"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

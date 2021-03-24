@@ -52,4 +52,11 @@ public class Dashboard extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void exercise(View view)
+    {
+        Intent intent = new Intent(this,ExerciseActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

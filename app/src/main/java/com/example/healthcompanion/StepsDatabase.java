@@ -11,21 +11,21 @@ import androidx.room.RoomDatabase;
 public abstract class StepsDatabase extends RoomDatabase {
 
     public abstract StepsDao stepsDao();
-    private static StepsDatabase db;
+    private static StepsDatabase dbSteps;
 
     public static StepsDatabase getInstance(Context context)
     {
-        if(db==null)
+        if(dbSteps ==null)
         {
-            db = db.buildDatabaseInstance(context);
+            dbSteps = dbSteps.buildDatabaseInstance(context);
         }
 
-        return db;
+        return dbSteps;
     }
 
     private static StepsDatabase buildDatabaseInstance (Context context)
     {
-        return Room.databaseBuilder(context, StepsDatabase.class,"database")
+        return Room.databaseBuilder(context, StepsDatabase.class,"databaseSteps")
                 //.allowMainThreadQueries()
                 .build();
     }

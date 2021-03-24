@@ -34,6 +34,14 @@ public class AllDaysSteps extends AppCompatActivity implements StepsAdapter.Item
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+   /* @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this,Pedometer.class);
+        startActivity(intent);
+        finish();
+    }*/
+
     @Override
     public void OnItemClick(int position) {
         Intent intent = new Intent(this,IndividualDayDisplay.class);

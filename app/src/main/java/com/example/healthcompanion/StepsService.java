@@ -61,13 +61,17 @@ public class StepsService extends Service implements SensorEventListener {
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
             sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_FASTEST);
         }
+        else
+        {
+            Toast.makeText(this, "Your phone does not contain sensor", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "This App can't run on your phone", Toast.LENGTH_LONG).show();
+        }
 
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand: aaaaa");
         return START_STICKY;
     }
 

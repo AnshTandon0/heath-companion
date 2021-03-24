@@ -62,11 +62,18 @@ public class Pedometer extends AppCompatActivity {
 
         // set text for textView
         try {
-            if (stepsRepository.getAllSteps().size() > 0) {
+            if (stepsRepository.getAllSteps().size() > 0 && sharedPreferences.getString("current date","").equalsIgnoreCase(date)) {
                 distanceTotal.setText(String.format("%.4f", stepsRepository.search(date).getTotalDistance()) + " km");
                 distanceWalk.setText(String.format("%.4f", stepsRepository.search(date).getDistanceWalk()) + " km");
                 distanceRun.setText(String.format("%.4f", stepsRepository.search(date).getDistanceRan()) + " km");
                 stepsTotal.setText(String.valueOf(stepsRepository.search(date).getTotalSteps()));
+            }
+            else
+            {
+                distanceTotal.setText("0");
+                distanceWalk.setText("0");
+                distanceRun.setText("0");
+                stepsTotal.setText("0");
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
