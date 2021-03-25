@@ -2,17 +2,18 @@ package com.example.healthcompanion;
 
 import android.os.AsyncTask;
 
-class UpdateAsyncTask extends AsyncTask<Steps,Void,Void>
+class InsertAsyncTaskPedometer extends AsyncTask<Steps,Void,Void>
 {
     private StepsDao stepsDao;
-    public UpdateAsyncTask(StepsDao dao)
+    public InsertAsyncTaskPedometer(StepsDao dao)
     {
         stepsDao = dao;
     }
 
     @Override
     protected Void doInBackground(Steps... steps) {
-        stepsDao.update(steps[0]);
+        stepsDao.insert(steps[0]);
         return null;
     }
 }
+

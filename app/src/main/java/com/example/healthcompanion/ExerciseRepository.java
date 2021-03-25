@@ -3,6 +3,7 @@ package com.example.healthcompanion;
 import android.content.Context;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ExerciseRepository  {
 
@@ -16,31 +17,27 @@ public class ExerciseRepository  {
 
     public void insert(Exercise exercise)
     {
-        exerciseDao.insert(exercise);
+        new InsertAsyncTaskExercise(exerciseDao).execute(exercise);
     }
 
     public void update(Exercise exercise)
     {
-        exerciseDao.update(exercise);
+        new UpdateAsyncTaskExercise(exerciseDao).execute(exercise);
     }
 
-    public List<Exercise> selectAll()
-    {
-        return exerciseDao.selectAll();
+    public List<Exercise> selectAll() throws ExecutionException, InterruptedException {
+        return new SearchAllAsyncTaskExercise(exerciseDao).execute().get();
     }
 
-    public Exercise search( String date)
-    {
-        return exerciseDao.search(date);
+    public Exercise search( String date) throws ExecutionException, InterruptedException {
+        return new SearchAsyncTaskExercise(exerciseDao).execute(date).get();
     }
 
-    public String selectStartTime( String date )
-    {
-        return exerciseDao.select_Start_time(date);
+    public String selectStartTime( String date ) throws ExecutionException, InterruptedException {
+        return new SearchAsyncTaskExercise(exerciseDao).execute(date).get().getStart_time();
     }
 
-    public String selectEndTime( String date )
-    {
-        return exerciseDao.select_end_time(date);
+    public String selectEndTime( String date ) throws ExecutionException, InterruptedException {
+        return new SearchAsyncTaskExercise(exerciseDao).execute(date).get().getEnd_time();
     }
 }

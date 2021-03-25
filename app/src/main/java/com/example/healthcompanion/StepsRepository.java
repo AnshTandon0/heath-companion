@@ -16,17 +16,17 @@ public class StepsRepository {
     }
 
     public List<Steps> getAllSteps() throws ExecutionException, InterruptedException {
-        return new SearchAllAsyncTask(stepsDao).execute().get();
+        return new SearchAllAsyncTaskPedometer(stepsDao).execute().get();
     }
     public Steps search (String date) throws ExecutionException, InterruptedException {
-        return new SearchAsyncTask(stepsDao).execute(date).get();
+        return new SearchAsyncTaskPedometer(stepsDao).execute(date).get();
     }
     public void insert (Steps steps)
     {
-        new InsertAsyncTask(stepsDao).execute(steps);
+        new InsertAsyncTaskPedometer(stepsDao).execute(steps);
     }
     public void update (Steps steps)
     {
-        new UpdateAsyncTask(stepsDao).execute(steps);
+        new UpdateAsyncTaskPedometer(stepsDao).execute(steps);
     }
 }

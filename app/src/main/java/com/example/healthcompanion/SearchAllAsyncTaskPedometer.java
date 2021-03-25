@@ -4,17 +4,17 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-public class SearchAllAsyncTask extends AsyncTask<Steps,Void, List<Steps>> {
+public class SearchAllAsyncTaskPedometer extends AsyncTask<Void,Void, List<Steps>> {
 
     private StepsDao stepsDao;
 
-    public SearchAllAsyncTask ( StepsDao stepsDao)
+    public SearchAllAsyncTaskPedometer(StepsDao stepsDao)
     {
         this.stepsDao = stepsDao;
     }
 
     @Override
-    protected List<Steps> doInBackground(Steps... steps) {
+    protected List<Steps> doInBackground(Void... voids) {
         return stepsDao.selectAll();
     }
 }

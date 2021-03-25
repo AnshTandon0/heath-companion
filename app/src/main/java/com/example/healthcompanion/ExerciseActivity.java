@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class ExerciseActivity extends AppCompatActivity {
 
@@ -44,19 +45,24 @@ public class ExerciseActivity extends AppCompatActivity {
         editor.putString("status","start exercise");
         editor.apply();
 
-        if(exerciseRepository.selectAll().size() > 0 )
-        {
-            RecyclerView recyclerView = findViewById(R.id.recyclerViews);
-            ExerciseAdapter exerciseAdapter = new ExerciseAdapter(this,exerciseRepository.selectAll());
-            recyclerView.setAdapter(exerciseAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        try {
+            if(exerciseRepository.selectAll().size() > 0 )
+            {
+                RecyclerView recyclerView = findViewById(R.id.recyclerViews);
+                ExerciseAdapter exerciseAdapter = new ExerciseAdapter(this,exerciseRepository.selectAll());
+                recyclerView.setAdapter(exerciseAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }
 
 
-    public void startExercise(View view)
-    {
+    public void startExercise(View view) throws ExecutionException, InterruptedException {
         ExerciseAdapter exerciseAdapter;
         RecyclerView recyclerView;
         if ( sharedPreferences.getString("status","").equalsIgnoreCase("start exercise"))
