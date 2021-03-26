@@ -59,4 +59,11 @@ public class Dashboard extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void water(View view)
+    {
+        Intent intent = new Intent(this,WaterActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

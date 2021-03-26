@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCompanion">
-        <activity android:name=".ExerciseActivity"></activity>
+        <activity android:name=".WaterSchedule"></activity>
+        <activity android:name=".WaterActivity" />
+        <activity android:name=".ExerciseActivity" />
         <activity android:name=".IndividualDayDisplay" />
         <activity android:name=".AllDaysSteps" />
 
