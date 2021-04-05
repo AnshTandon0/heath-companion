@@ -17,19 +17,19 @@ public class SleepRepository {
 
     public void Insert ( Sleep sleep)
     {
-        sleepDao.insert(sleep);
+        new InsertAsyncTaskSleep(sleepDao).execute(sleep);
     }
     public void Update ( Sleep sleep)
     {
-        sleepDao.update(sleep);
+        new UpdateAsyncTaskSleep(sleepDao).execute(sleep);
     }
     public List<Sleep> SelectAll ()
     {
-        return sleepDao.selectAll();
+        return new SelectAllAsyncTaskSleep(sleepDao).doInBackground();
     }
     public Sleep Search ( String date)
     {
-        return sleepDao.search(date);
+        return new SearchAsyncTaskSleep(sleepDao).doInBackground(date);
     }
 
 

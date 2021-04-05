@@ -130,7 +130,7 @@ public class SleepActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        NotificationManagerCompat.from(SleepActivity.this).cancel(14);
+                       // TODO to add the parcel to save the intent to cancel the alarm
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
