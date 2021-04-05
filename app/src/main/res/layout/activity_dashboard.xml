@@ -5,94 +5,120 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Dashboard"
-    android:gravity="center"
     android:orientation="vertical"
-    android:background="#172F49">
+    android:background="#FAE392"
+    android:paddingHorizontal="30dp"
+    android:paddingVertical="20dp">
 
     <TextView
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Welcome to Health Companion"
+        android:layout_marginTop="6dp"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold|italic" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingHorizontal="40dp">
-
-            <Button
-                android:onClick="exercise"
-                android:id="@+id/exercise"
+            <GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#F44336"
-                android:text="Exercise"
-                android:textAllCaps="false"
-                android:textSize="30sp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="40dp">
-
-            <Button
-                android:id="@+id/sleep"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#F44336"
-                android:text="Sleep"
-                android:onClick="sleep"
-                android:textAllCaps="false"
-                android:textSize="30sp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="40dp">
-
-            <Button
-                android:id="@+id/water"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#F44336"
-                android:text="Water"
-                android:onClick="water"
-                android:textAllCaps="false"
-                android:textSize="30sp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="40dp">
-
-            <Button
-                android:onClick="pedometer"
-                android:id="@+id/pedometer"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#F44336"
-                android:text="Pedometer"
-                android:textAllCaps="false"
-                android:textSize="30sp" />
-
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:rowCount="2"
+                android:columnCount="2">
 
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:onClick="exercise">
+
+                    <ImageView
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:background="@drawable/exercise"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#40C0FA"
+                        android:text="Exercise"
+                        android:textAllCaps="false"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:onClick="sleep">
+
+                    <ImageView
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:background="@drawable/sleep"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#40C0FA"
+                        android:text="Sleep"
+                        android:textAllCaps="false"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:onClick="pedometer">
+
+                    <ImageView
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:background="@drawable/pedometer"/>
+
+                    <Button
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#40C0FA"
+                        android:text="Pedometer"
+                        android:textAllCaps="false"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                    <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:onClick="water">
+
+                    <ImageView
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:background="@drawable/water"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#40C0FA"
+                        android:text="Water"
+                        android:textAllCaps="false"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </GridLayout>
 
 </LinearLayout>
