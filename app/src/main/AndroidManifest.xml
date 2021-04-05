@@ -9,13 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCompanion">
-        <activity android:name=".WaterSchedule"></activity>
+        <activity android:name=".SleepActivity"></activity>
+        <activity android:name=".WaterSchedule" />
         <activity android:name=".WaterActivity" />
         <activity android:name=".ExerciseActivity" />
         <activity android:name=".IndividualDayDisplay" />
         <activity android:name=".AllDaysSteps" />
 
         <service android:name=".StepsService" />
+        <service android:name=".WaterService" />
+        <service android:name=".SleepService"/>
+        <service android:name=".SleepServiceCancel"/>
+
+        <receiver android:name=".WaterNotificationReciever" />
+        <receiver android:name=".SleepNotificationReciever"/>
 
         <activity android:name=".Pedometer" />
         <activity android:name=".ForgotPassword" />

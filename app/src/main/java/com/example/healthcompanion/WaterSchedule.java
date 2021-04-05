@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,10 +31,18 @@ public class WaterSchedule extends AppCompatActivity implements WaterScheduleAda
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,WaterActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void addSchedule(View view)
     {
         final EditText editText = new EditText(this);
         editText.setHint(" HH:MM:SS ");
+        //editText.setInputType(InputType.TYPE_DATETIME_VARIATION_TIME);
         AlertDialog.Builder alert = new AlertDialog.Builder(WaterSchedule.this)
                 .setTitle("SCHEDULE")
                 .setMessage("Enter the Time ( 24 hrs format )")

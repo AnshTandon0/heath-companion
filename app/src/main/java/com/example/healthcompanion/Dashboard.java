@@ -50,20 +50,22 @@ public class Dashboard extends AppCompatActivity {
     {
         Intent intent = new Intent(this,Pedometer.class);
         startActivity(intent);
-        finish();
     }
 
     public void exercise(View view)
     {
         Intent intent = new Intent(this,ExerciseActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void water(View view)
     {
         Intent intent = new Intent(this,WaterActivity.class);
         startActivity(intent);
-        finish();
+    }
+    public void sleep(View view)
+    {
+        Intent intent = new Intent(this,SleepActivity.class);
+        startActivity(intent);
     }
 }

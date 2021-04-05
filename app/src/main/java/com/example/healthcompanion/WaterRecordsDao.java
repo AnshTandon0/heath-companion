@@ -3,6 +3,7 @@ package com.example.healthcompanion;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Dao
 public interface WaterRecordsDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void Insert( WaterRecords waterRecords);
 
     @Update

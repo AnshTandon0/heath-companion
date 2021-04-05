@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Start Sleep"
+        android:onClick="StartSleep"
+        android:id="@+id/StartSleep"/>
+
+    <item android:title="Add Alarm"
+        android:onClick="AddAlarm"
+        android:id="@+id/AddAlarm"/>
+
+    <item android:title="Cancel Alarm"
+        android:onClick="CancelAlarm"
+        android:id="@+id/CancelAlarm"/>
+
+
+</menu>

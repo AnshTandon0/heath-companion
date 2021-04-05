@@ -31,4 +31,20 @@ public class DataConverter implements Serializable {
         }
         return genreIds;
     }
+
+    @TypeConverter
+    public static List<Integer> timeSeparator( String time)
+    {
+        List<Integer> integers = new ArrayList<>();
+        String [] array = time.split(":");
+        for (String s: array)
+        {
+            if(!s.isEmpty())
+            {
+                integers.add(Integer.valueOf(s));
+            }
+        }
+
+        return integers;
+    }
 }
