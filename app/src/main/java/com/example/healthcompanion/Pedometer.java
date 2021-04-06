@@ -94,6 +94,8 @@ public class Pedometer extends AppCompatActivity {
         {
             button.setText("Stop Running mode");
         }
+
+        getSupportActionBar().setTitle("Pedometer");
     }
 
     public void runningMode(View view)
@@ -129,7 +131,7 @@ public class Pedometer extends AppCompatActivity {
                     distanceTotal.setText(String.format("%.4f", stepsRepository.search(date).getTotalDistance()) + " km");
                     distanceWalk.setText(String.format("%.4f", stepsRepository.search(date).getDistanceWalk()) + " km");
                     distanceRun.setText(String.format("%.4f", stepsRepository.search(date).getDistanceRan()) + " km");
-                    stepsTotal.setText(String.valueOf(stepsRepository.search(date).getTotalSteps()));
+                    stepsTotal.setText( " "+ String.valueOf(stepsRepository.search(date).getTotalSteps()) + " ");
                 }
             } catch (ExecutionException e) {
                 e.printStackTrace();

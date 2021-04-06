@@ -67,7 +67,7 @@ public class WaterActivity extends AppCompatActivity {
             }
             }
         }
-
+        getSupportActionBar().setTitle("Water");
     }
     public void schedule( MenuItem item )
     {

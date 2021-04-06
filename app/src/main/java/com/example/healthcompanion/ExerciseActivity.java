@@ -58,7 +58,7 @@ public class ExerciseActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        getSupportActionBar().setTitle("Exercise");
     }
 
 
@@ -133,20 +133,6 @@ public class ExerciseActivity extends AppCompatActivity {
                 recyclerView.setAdapter(exerciseAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
             }
-            /*else
-            {
-                editor.putString("date",date);
-                startTime.add(new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
-                endTime.add("On Going");
-                Exercise exercise = new Exercise(date, startTime,endTime);
-                exerciseRepository.insert(exercise);
-
-                recyclerView = findViewById(R.id.recyclerView2);
-                exerciseAdapter = new ExerciseAdapter(this,exerciseRepository.selectAll(),exerciseRepository.selectStartTime(date),exerciseRepository.selectEndTime(date));
-                recyclerView.setAdapter(exerciseAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-            }*/
         }
     }
 }

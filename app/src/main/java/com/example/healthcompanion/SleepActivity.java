@@ -48,6 +48,7 @@ public class SleepActivity extends AppCompatActivity {
         SleepAdapter sleepAdapter = new SleepAdapter(SleepActivity.this,sleepRepository.SelectAll());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(sleepAdapter);
+        getSupportActionBar().setTitle("Sleep");
     }
 
     public void StartSleep ( MenuItem item )
