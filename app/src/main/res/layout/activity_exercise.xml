@@ -24,7 +24,7 @@
         android:id="@+id/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#40C0FA"
+        android:backgroundTint="#EF0D5A"
         android:onClick="startExercise"
         android:text="Start Exercise"
         android:textAllCaps="false"

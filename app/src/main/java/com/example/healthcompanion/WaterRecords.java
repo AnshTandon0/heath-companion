@@ -17,10 +17,18 @@ public class WaterRecords {
     @NonNull
     private String status;
 
-    public WaterRecords(@NonNull String date, @NonNull String schedule, @NonNull String status) {
+    @NonNull
+    private int consumed;
+
+    @NonNull
+    private  int missed;
+
+    public WaterRecords(@NonNull String date, @NonNull String schedule, @NonNull String status, int consumed, int missed) {
         this.date = date;
         this.schedule = schedule;
         this.status = status;
+        this.consumed = consumed;
+        this.missed = missed;
     }
 
     @NonNull
@@ -48,5 +56,21 @@ public class WaterRecords {
 
     public void setStatus(@NonNull String status) {
         this.status = status;
+    }
+
+    public int getConsumed() {
+        return consumed;
+    }
+
+    public void setConsumed(int consumed) {
+        this.consumed = consumed;
+    }
+
+    public int getMissed() {
+        return missed;
+    }
+
+    public void setMissed(int missed) {
+        this.missed = missed;
     }
 }
