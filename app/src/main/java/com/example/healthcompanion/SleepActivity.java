@@ -131,7 +131,18 @@ public class SleepActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       // TODO to add the parcel to save the intent to cancel the alarm
+                        Intent intent = new Intent(SleepActivity.this, SleepNotificationReciever.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(SleepActivity.this, 11, intent, 0);
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        alarmManager.cancel(pendingIntent);
+                        Toast.makeText(SleepActivity.this, "Alarm Cancelled Successfully", Toast.LENGTH_SHORT).show();
+
+                        SleepRepository sleepRepository = new SleepRepository(getApplicationContext());
+                        Sleep sleep = sleepRepository.Search(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
+                        String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                        sleep.setEndTime(time);
+                        sleep.setStatus("Under Slept");
+                        sleepRepository.Update(sleep);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
