@@ -9,6 +9,10 @@
     android:paddingVertical="20dp"
     android:background="#FAE392">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

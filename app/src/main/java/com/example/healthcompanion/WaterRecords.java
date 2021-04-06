@@ -12,21 +12,13 @@ public class WaterRecords {
     private String date;
 
     @NonNull
-    private String schedule;
-
-    @NonNull
-    private String status;
-
-    @NonNull
     private int consumed;
 
     @NonNull
     private  int missed;
 
-    public WaterRecords(@NonNull String date, @NonNull String schedule, @NonNull String status, int consumed, int missed) {
+    public WaterRecords(@NonNull String date, int consumed, int missed) {
         this.date = date;
-        this.schedule = schedule;
-        this.status = status;
         this.consumed = consumed;
         this.missed = missed;
     }
@@ -38,24 +30,6 @@ public class WaterRecords {
 
     public void setDate(@NonNull String date) {
         this.date = date;
-    }
-
-    @NonNull
-    public String getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(@NonNull String schedule) {
-        this.schedule = schedule;
-    }
-
-    @NonNull
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(@NonNull String status) {
-        this.status = status;
     }
 
     public int getConsumed() {

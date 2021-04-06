@@ -34,6 +34,7 @@ public class WaterSchedule extends AppCompatActivity implements WaterScheduleAda
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this,WaterActivity.class);
+        intent.putExtra("schedule","changed");
         startActivity(intent);
         finish();
     }

@@ -18,37 +18,37 @@ public class WaterRepository {
 
     public void InsertWater ( Water water)
     {
-        waterDao.Insert(water);
+        new InsertAsyncTaskWater(waterDao).doInBackground(water);
     }
 
     public void DeleteWater ( Water water )
     {
-        waterDao.Delete(water);
+        new DeleteAsyncTaskWater(waterDao).doInBackground(water);
     }
 
     public List<Water> SelectAllWater ()
     {
-        return waterDao.SelectAll();
+        return new SelectAllAsyncTaskWater(waterDao).doInBackground();
     }
 
     public void InsertWaterRecords ( WaterRecords waterRecords)
     {
-        waterRecordsDao.Insert(waterRecords);
+        new InsertAsyncTaskWaterRecords(waterRecordsDao).doInBackground(waterRecords);
     }
 
     public void UpdateWaterRecords ( WaterRecords waterRecords )
     {
-        waterRecordsDao.Update(waterRecords);
+       new UpdateAsyncTaskWaterRecords(waterRecordsDao).doInBackground(waterRecords);
     }
 
     public List<WaterRecords> SelectAllWaterRecords ()
     {
-        return waterRecordsDao.SelectAll();
+        return new SelectAllAsyncTaskWaterRecords(waterRecordsDao).doInBackground();
     }
 
     public WaterRecords SearchWaterRecords ( String date )
     {
-        return waterRecordsDao.Search(date);
+        return new SearchAsyncTaskWaterRecords(waterRecordsDao).doInBackground(date);
     }
 
 }

@@ -25,53 +25,30 @@ public class WaterService extends Service {
 
     WaterRepository waterRepository;
     WaterRecords waterRecords;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
     String date;
 
-// TODO add recycler view for water activity and solve the ongoing error in notification
+// TODO  solve the ongoing error in notification
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         NotificationManagerCompat.from(getApplicationContext()).cancel(100);
+        waterRepository = new WaterRepository(this);
+        date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        waterRecords = new WaterRecords(date,0,0);
+        waterRepository.InsertWaterRecords(waterRecords);
 
         if (intent.getStringExtra("status").equals("Consumed"))
         {
-            if(sharedPreferences.getString("date","").equals(date))
-            {
-               waterRecords.setSchedule(waterRepository.SearchWaterRecords(date).getSchedule() + intent.getStringExtra("time") + ";");
-               waterRecords.setStatus(waterRepository.SearchWaterRecords(date).getStatus() + "Consumed;");
-               waterRepository.UpdateWaterRecords(waterRecords);
-                System.out.println(waterRepository.SearchWaterRecords(date).getSchedule());
-                Log.d("", "onStartCommand:iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii ");
-            }
-            else
-            {
-                waterRecords.setSchedule(intent.getStringExtra("time") + ";");
-                waterRecords.setStatus("Consumed;");
-                waterRepository.InsertWaterRecords(waterRecords);
-                editor.putString("date",date);
-                editor.commit();
-                System.out.println(waterRepository.SearchWaterRecords(date).getSchedule());
-            }
+            waterRecords = waterRepository.SearchWaterRecords(date);
+            waterRecords.setConsumed(waterRepository.SearchWaterRecords(date).getConsumed() + 1 );
+            waterRepository.UpdateWaterRecords(waterRecords);
 
         }
         else if (intent.getStringExtra("status").equals("Missed"))
         {
-            if(sharedPreferences.getString("date","").equals(date))
-            {
-                waterRecords.setSchedule(waterRepository.SearchWaterRecords(date).getSchedule() + intent.getStringExtra("time") + ";");
-                waterRecords.setStatus(waterRepository.SearchWaterRecords(date).getStatus() + "Missed;");
-                waterRepository.UpdateWaterRecords(waterRecords);
-            }
-            else
-            {
-                waterRecords.setSchedule(intent.getStringExtra("time") + ";");
-                waterRecords.setStatus("Missed;");
-                waterRepository.InsertWaterRecords(waterRecords);
-                editor.putString("date",date);
-                editor.apply();
-            }
+            waterRecords = waterRepository.SearchWaterRecords(date);
+            waterRecords.setMissed(waterRepository.SearchWaterRecords(date).getMissed() + 1 );
+            waterRepository.UpdateWaterRecords(waterRecords);
         }
 
         return START_NOT_STICKY;
@@ -80,15 +57,6 @@ public class WaterService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        waterRepository = new WaterRepository(this);
-        date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
-        waterRecords = new WaterRecords(date,"","");
-
-        sharedPreferences = getSharedPreferences("Water",MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        editor.putString("date","");
-        editor.apply();
-
     }
 
     @Nullable

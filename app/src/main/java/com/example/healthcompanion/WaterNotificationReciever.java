@@ -15,13 +15,10 @@ public class WaterNotificationReciever extends BroadcastReceiver {
 
         Intent intent1 = new Intent(context,WaterService.class);
         intent1.putExtra("status","Consumed");
-        intent1.putExtra("time",intent.getStringExtra("time"));
-        System.out.println(intent.getStringExtra("time"));
         PendingIntent pendingIntent1 = PendingIntent.getService(context,999,intent1,0);
 
         Intent intent2 = new Intent(context,WaterService.class);
         intent2.putExtra("status","Missed");
-        intent2.putExtra("time",intent.getStringExtra("time"));
         PendingIntent pendingIntent2 = PendingIntent.getService(context,998,intent2,0);
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

@@ -66,6 +66,25 @@ public class Dashboard extends AppCompatActivity {
         textView.setText("Welcome " + sharedPreferences.getString("name",""));
     }
 
+    @Override
+    public void onBackPressed() {
+        android.app.AlertDialog.Builder alert2 = new android.app.AlertDialog.Builder(this)
+                .setTitle("Are you sure to Exit ?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        recreate();
+                    }
+                });
+        alert2.show();
+    }
+
     public void logout(MenuItem item)
     {
         editor.putString("First Time Second Time","First Time");
@@ -92,6 +111,7 @@ public class Dashboard extends AppCompatActivity {
     public void water(View view)
     {
         Intent intent = new Intent(this,WaterActivity.class);
+        intent.putExtra("schedule","");
         startActivity(intent);
     }
     public void sleep(View view)
